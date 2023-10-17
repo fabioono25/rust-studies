@@ -114,6 +114,51 @@ fn main() {
     // cannot borrow `s10` as mutable because it is also borrowed as immutable mutable borrow occurs here
     // s10.clear();
     println!("the value is: {word}");
+
+    let mut user = User {
+        email: String::from("abc"),
+        username: String::from("xyz"),
+        active: true,
+        sign_in_count: 1,
+    };
+
+    user.email = String::from("another email");
+
+    println!("the value is: {}", user.email);
+
+    let user2 = build_user(String::from("abc"), String::from("xyz"));
+    println!("the value is: {}", user2.email);
+
+    let user3 = User {
+        email: String::from("abcd"),
+        username: String::from("xyz"),
+        ..user2
+    };
+    println!("the value is: {}", user3.email);
+
+    let black = Color(0, 0, 0);
+
+    let rect = (30, 50);
+    println!("the value is: {}", area(rect));
+
+    let rect2 = Rectangle {
+        width: 30,
+        height: 50,
+    };
+
+    println!("the value is: {}", area2(&rect2));
+    println!("rect2 is {:?}", rect2);
+
+    let rect3 = Rectangle {
+        width: 30,
+        height: 50,
+    };
+
+    println!("Area of rect3 is {}", rect3.area());
+    println!("Width of rect3 is {}", rect3.width());
+
+    let rect4 = Rectangle::square(30);
+    println!("Area of rect4 is {}", rect4.area());
 }
 
 fn another_function(x: i32) -> i32 {
@@ -150,4 +195,59 @@ fn first_word(s: &String) -> &str {
     }
 
     &s[..]
+}
+
+fn build_user(email: String, username: String) -> User {
+    User {
+        email, // field init shorthand
+        username,
+        active: true,
+        sign_in_count: 1,
+    }
+}
+
+struct User {
+    username: String,
+    email: String,
+    sign_in_count: u64,
+    active: bool,
+}
+
+// tuple struct
+struct Color(i32, i32, i32);
+
+// unit-like struct
+struct UnitLikeStruct;
+
+fn area(dimension: (u32, u32)) -> u32 {
+    dimension.0 * dimension.1
+}
+
+fn area2(rectangle: &Rectangle) -> u32 {
+    rectangle.width * rectangle.height
+}
+
+#[derive(Debug)]
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+impl Rectangle {
+    fn area(&self) -> u32 {
+        // method
+        self.width * self.height
+    }
+
+    fn width(&self) -> u32 {
+        // method
+        self.width
+    }
+
+    fn square(size: u32) -> Self {
+        Self {
+            width: size,
+            height: size,
+        }
+    }
 }
