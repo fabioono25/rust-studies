@@ -159,6 +159,36 @@ fn main() {
 
     let rect4 = Rectangle::square(30);
     println!("Area of rect4 is {}", rect4.area());
+
+    // working with enums
+    let four = IpAddrKind::V4;
+
+    let home = IpAddr {
+        kind: IpAddrKind::V4,
+        address: String::from("127.0.0.1"),
+    };
+
+    let loopback = IpAddr2::V6(String::from("::1"));
+
+    let m = Message::Write(String::from("hello"));
+    m.call();
+
+    let some_number = Some('e');
+    let absent_number: Option<i32> = None;
+    let coin = Coin::Penny;
+    let value = value_in_cents(coin);
+    let value2 = value_in_cents(Coin::Quarter(UsState::Alabama));
+
+    let five = Some(5);
+    let six = plus_one(five);
+
+    let config_max = Some(3u8);
+
+    if let Some(max) = config_max {
+        println!("Max is {}", max);
+    } else {
+        println!("No max provided");
+    }
 }
 
 fn another_function(x: i32) -> i32 {
@@ -249,5 +279,78 @@ impl Rectangle {
             width: size,
             height: size,
         }
+    }
+}
+
+enum IpAddrKind {
+    V4,
+    V6,
+}
+
+struct IpAddr {
+    kind: IpAddrKind,
+    address: String,
+}
+
+enum IpAddr2 {
+    V4(u8, u8, u8, u8),
+    V6(String),
+}
+
+enum Message {
+    Quit,                       // no data associated
+    Move { x: i32, y: i32 },    // anonymous struct
+    Write(String),              // single string
+    ChangeColor(i32, i32, i32), // three i32 values
+}
+
+impl Message {
+    fn call(&self) {
+        println!("call inside message");
+    }
+}
+
+// enum Option<T> {
+//     Some(T),
+//     None,
+// }
+
+#[derive(Debug)] // so we can inspect the state in a minute
+enum UsState {
+    Alabama,
+    Alaska,
+    // --snip--
+}
+
+enum Coin {
+    Penny,
+    Nickel,
+    Dime,
+    Quarter(UsState),
+}
+
+fn value_in_cents(coin: Coin) -> u8 {
+    match coin {
+        // match is exhaustive
+        Coin::Penny => {
+            println!("Lucky penny!");
+            1
+        }
+        Coin::Nickel => 5,
+        Coin::Dime => 10,
+        Coin::Quarter(state) => {
+            // match is exhaustive
+            println!("State quarter from {:?}!", state);
+            25
+        }
+        _ => 25,
+    }
+}
+
+fn plus_one(x: Option<i32>) -> Option<i32> {
+    match x {
+        // match is exhaustive
+        None => None,
+        Some(i) => Some(i + 1),
     }
 }
