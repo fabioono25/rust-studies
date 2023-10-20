@@ -13,21 +13,23 @@ mod tests {
     }
 }
 
-mod front_of_house {
-    pub mod hosting {
-        pub fn add_to_waitlist() {}
 
-        fn seat_at_table() {}
-    }
 
-    mod serving {
-        fn take_order() {}
+// mod front_of_house {
+//     pub mod hosting {
+//         pub fn add_to_waitlist() {}
 
-        fn serve_order() {}
+//         fn seat_at_table() {}
+//     }
 
-        fn take_payment() {}
-    }
-}
+//     mod serving {
+//         fn take_order() {}
+
+//         fn serve_order() {}
+
+//         fn take_payment() {}
+//     }
+// }
 
 fn deliver_order() {}
 
@@ -60,6 +62,8 @@ mod back_of_house {
         Salad,
     }
 }
+
+mod front_of_house;
 
 // bring this module into the scope of eat_at_restaurant
 use crate::front_of_house::hosting::add_to_waitlist;
