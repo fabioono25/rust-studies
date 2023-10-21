@@ -76,6 +76,32 @@ fn main() {
     for b in "Зд".bytes() {
         println!("{b}");
     }
+
+    // hash maps:
+    let mut scores = HashMap::new();
+    scores.insert(String::from("Blue"), 10);
+    scores.insert(String::from("Yellow"), 50);
+    scores.insert(String::from("Blue"), 25); // overwrites the previous value
+    scores.entry(String::from("Yellow")).or_insert(200); // only inserts if the key has no value
+
+    let team_name = String::from("Blue");
+    let score = scores.get(&team_name).copied().unwrap_or(0);
+    println!("{}", score);
+
+    for (key, value) in &scores {
+        println!("{}: {}", key, value);
+    }
+    println!("{:?}", scores);
+
+    let text = "hello world wonderful world";
+    let mut map = HashMap::new();
+
+    for word in text.split_whitespace() {
+        // or_insert returns a mutable reference to the value for this key
+        let count = map.entry(word).or_insert(0);
+        *count += 1;
+    }
+    println!("{:?}", map);
 }
 
 // fn function1() -> fmt::Result {
