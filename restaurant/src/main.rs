@@ -60,6 +60,22 @@ fn main() {
         SpreadsheetCell::Float(3.14),
         SpreadsheetCell::Text(String::from("blue")),
     ];
+
+    // working with Strings
+    let mut s = String::new();
+    s.push_str("hello");
+    println!("{}", s);
+    let hello = String::from("こんにちは");
+    println!("{}", hello);
+
+    // the best way to iterate over string characters
+    for c in "Зд".chars() {
+        println!("{c}");
+    }
+
+    for b in "Зд".bytes() {
+        println!("{b}");
+    }
 }
 
 // fn function1() -> fmt::Result {
