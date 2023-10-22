@@ -6,9 +6,16 @@
   "configurations": [
     {
       "type": "lldb",
+      "request": "attach",
+      "name": "Attach",
+      "program": "${workspaceFolder}/<program>"
+    },
+    
+    {
+      "type": "lldb",
       "request": "launch",
       "name": "Debug",
-      "program": "${workspaceFolder}/<executable file>",
+      "program": "${workspaceFolder}/test2/src/main.exe",
       "args": [],
       "cwd": "${workspaceFolder}"
     }
