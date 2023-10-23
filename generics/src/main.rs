@@ -21,6 +21,13 @@ fn main() {
 
     let result = largest(&char_list);
     println!("The largest char is (using generics) {}", result);
+
+    let integer = Point { x: 5, y: 10 };
+    let float = Point { x: 1.0, y: 4.0 };
+    let string = Point { x: "Hello", y: "World" };
+
+    let p = Point { x: 5, y: 10 };
+    println!("p.x = {}", p.x());
 }
 
 // without generics
@@ -47,7 +54,7 @@ fn largest_char(list: &[char]) -> &char {
     largest
 }
 
-// now, using generics
+// now, using generics in function
 fn largest<T>(list: &[T]) -> &T
 where
     T: std::cmp::PartialOrd,
@@ -62,4 +69,22 @@ where
     }
 
     largest
+}
+
+// multiple generic type parameters
+struct Point<T, U> {
+    x: T,
+    y: U,
+}
+
+// enum Option<T> {
+//     Some(T),
+//     None,
+// }
+
+// using generics in method definitions
+impl<T, U> Point<T, U> {
+    fn x(&self) -> &T {
+        &self.x
+    }
 }
