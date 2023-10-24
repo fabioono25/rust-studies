@@ -1,3 +1,5 @@
+use std::fmt::Display;
+
 fn main() {
     println!("Hello, world!");
 
@@ -409,5 +411,51 @@ pub struct Tweet {
 impl Summary for Tweet {
     fn summarize_author(&self) -> String {
         format!("@{}", self.username)
+    }
+}
+
+// pub fn notify(item: impl Summary) {
+//     println!("Breaking news! {}", item.summarize());
+// }
+
+// pub fn notify<T: Summary>(item: &T) {
+//     println!("Breaking news! {}", item.summarize());
+// }
+
+pub fn notify(item: &(impl Summary + Display)) {
+    // multiple traits
+    println!("Breaking news! {}", item.summarize());
+}
+
+struct Pair<T> {
+    x: T,
+    y: T,
+}
+
+impl<T> Pair<T> {
+    fn new(x: T, y: T) -> Self {
+        Self { x, y }
+    }
+}
+
+impl<T: Display + PartialOrd> Pair<T> {
+    // multiple traits
+    fn cmp_display(&self) {
+        if self.x >= self.y {
+            println!("The largest member is x = {}", self.x);
+        } else {
+            println!("The largest member is y = {}", self.y);
+        }
+    }
+}
+
+fn returns_summarizable() -> impl Summary {
+    Tweet {
+        username: String::from("horse_ebooks"),
+        content: String::from(
+            "of course, as you probably already know, people",
+        ),
+        reply: false,
+        retweet: false,
     }
 }
