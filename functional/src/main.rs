@@ -38,9 +38,28 @@ fn main() {
 
     let user_pref1 = Some(ShirtColor::Red);
     let giveaway1 = store.giveaway(user_pref1);
-    println!("The user with preference {:?} gets {:?}", user_pref1, giveaway1);
+    println!(
+        "The user with preference {:?} gets {:?}",
+        user_pref1, giveaway1
+    );
 
     let user_pref2 = None;
     let giveaway2 = store.giveaway(user_pref2);
-    println!("The user with preference {:?} gets {:?}", user_pref2, giveaway2);
+    println!(
+        "The user with preference {:?} gets {:?}",
+        user_pref2, giveaway2
+    );
+
+    /* using closures */
+    let expensive_closure = |num: u32| -> u32 {
+        println!("calculating slowly...");
+        num * 2
+    };
+    println!("expensive_closure(10) = {}", expensive_closure(10));
+
+    let example_closure = |x| x;
+
+    let s = example_closure(String::from("hello"));
+    let n = example_closure(5.to_string());
+    println!("s = {}, n = {}", s, n);
 }
