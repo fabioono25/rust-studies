@@ -1,3 +1,5 @@
+use std::thread;
+
 #[derive(Debug, PartialEq, Copy, Clone)]
 enum ShirtColor {
     Red,
@@ -62,4 +64,21 @@ fn main() {
     let s = example_closure(String::from("hello"));
     let n = example_closure(5.to_string());
     println!("s = {}, n = {}", s, n);
+
+    let mut list = vec![1,2,3];
+    println!("before defining closure: {:?}", list);
+
+    let mut bollows_mutability = || list.push(4);
+    bollows_mutability();
+    println!("after calling closure: {:?}", list);
+
+    let only_borrows = || println!("list: {:?}", list);
+    println!("Before calling closure: {:?}", list);
+
+    only_borrows();
+    println!("After calling closure: {:?}", list);
+
+    thread::spawn(move || {
+        println!("Hello from a thread {:?}!", list);
+    }).join().unwrap();
 }
