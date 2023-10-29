@@ -15,10 +15,10 @@ fn prints_and_returns_10(a: i32) -> i32 {
     10
 }
 
-
-
 #[cfg(test)] // test only when you run cargo test
 mod tests {
+    use core::prelude::v1;
+
     use super::*;
 
     #[test]
@@ -102,6 +102,88 @@ mod tests {
         let value = prints_and_returns_10(8);
         assert_eq!(5, value);
     }
+
+    #[test]
+    fn sort_by_key() {
+        let mut list = [
+            Rectangle {
+                width: 30,
+                height: 50,
+            },
+            Rectangle {
+                width: 10,
+                height: 20,
+            },
+            Rectangle {
+                width: 40,
+                height: 60,
+            },
+        ];
+
+        let mut num_sort_operations = 0;
+        // list.sort_by_key(|r| r.width);
+        list.sort_by_key(|r| {
+            num_sort_operations += 1;
+            r.width
+        });
+        println!("{:#?}, sorted in {num_sort_operations} operations", list);
+    }
+
+    #[test]
+    fn using_iterators() {
+        let v1 = vec![1, 2, 3];
+        let v1_iter = v1.iter();
+
+        for val in v1_iter {
+            println!("Got: {}", val);
+        }
+    }
+
+    #[test]
+    fn iterator_demonstration() {
+        let v1 = vec![1, 2, 3];
+
+        let mut v1_iter = v1.iter();
+
+        assert_eq!(v1_iter.next(), Some(&1));
+        assert_eq!(v1_iter.next(), Some(&2));
+        assert_eq!(v1_iter.next(), Some(&3));
+        assert_eq!(v1_iter.next(), None);
+    }
+
+    #[test]
+    fn iterator_sum() {
+        let v1 = vec![1, 2, 3];
+        let v1_iter = v1.iter();
+        let total: i32 = v1_iter.sum();
+        assert_eq!(total, 6);
+    }
+
+    #[test]
+    fn producing_other_iterators() {
+        let v1: Vec<i32> = vec![1, 2, 3];
+        let v2: Vec<_> = v1.iter().map(|x| x + 1).collect();
+        assert_eq!(v2, vec![2, 3, 4]);
+    }
+
+    #[test]
+    fn filters_by_size() {
+      let shoes = vec![
+        Shoe { size: 10, style: String::from("sneaker") },
+        Shoe { size: 13, style: String::from("sandal") },
+        Shoe { size: 10, style: String::from("boot") },
+      ];
+  
+      let in_my_size = shoes_in_size(shoes, 10);
+  
+      assert_eq!(
+        in_my_size,
+        vec![
+          Shoe { size: 10, style: String::from("sneaker") },
+          Shoe { size: 10, style: String::from("boot") },
+        ]
+      );
+    }
 }
 
 #[derive(Debug)]
@@ -127,4 +209,14 @@ impl Guess {
         }
         Guess { value }
     }
+}
+
+#[derive(PartialEq, Debug)]
+struct Shoe {
+  size: u32,
+  style: String
+}
+
+fn shoes_in_size(shoes: Vec<Shoe>, shoe_size: u32) -> Vec<Shoe> {
+  shoes.into_iter().filter(|s| s.size == shoe_size).collect()
 }
