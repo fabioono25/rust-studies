@@ -1,3 +1,8 @@
+
+//! # Test
+//! 
+//! this is a comment
+
 use std::error::Error;
 use std::{env, fs};
 

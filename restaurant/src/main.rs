@@ -5,9 +5,11 @@ use std::io::Result as IoResult;
 
 use rand::Rng;
 
-// use std::cmp::Ordering;
-// use std::io;
-// use std::{cmp::Ordering, io};
+
+// pub use self::kinds::PrimaryColor;
+// pub use self::kinds::SecondaryColor;
+// pub use self::utils::mix;
+
 use std::io::{self, Write};
 
 use std::collections::*;
@@ -102,6 +104,10 @@ fn main() {
         *count += 1;
     }
     println!("{:?}", map);
+
+    // let red = PrimaryColor::Red;
+    // let yellow = PrimaryColor::Yellow;
+    // mix(red, yellow);
 }
 
 // fn function1() -> fmt::Result {
